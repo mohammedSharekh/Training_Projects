@@ -1,3 +1,4 @@
+import 'package:bmi_calculater/layout/home_layout.dart';
 import 'package:bmi_calculater/models/users_models.dart';
 import 'package:bmi_calculater/modules/bmi/bmi_screen.dart';
 import 'package:bmi_calculater/modules/counter/counter_screen.dart';
@@ -19,9 +20,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BMI CALCULATOR',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.deepPurple,
       ),
-      home: BmiScreenActions(),
+      home: HomeLayout(),
     );
   }
 }
