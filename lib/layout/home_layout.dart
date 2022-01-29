@@ -146,15 +146,17 @@ class _HomeLayoutState extends State<HomeLayout> {
                         TitleController.text = '';
                         DateController.text = '';
                         TimeController.text = '';
-                        setState(() {
-                          fabIcon = Icons.add;
-                        });
                       }),
                 ],
               ),
             ),
           ),
-        ));
+        )).closed.then((value) {
+          setState(() {
+            fabIcon = Icons.add;
+          });
+          isBottomSheetShown = false;
+        });
         setState(() {
           fabIcon = Icons.edit;
         });
