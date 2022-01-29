@@ -58,42 +58,6 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 
-
-   void createDatabase() async{
-     try {
-       database = await openDatabase(
-        'todo.db',
-        version: 1,
-        onCreate: (database, version) async{
-          await database.execute(
-              'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)'
-          );
-          print('Database is Created!');
-        },
-        onOpen: (database) {
-          print('Database is Opened!');
-        },
-           );
-     }  catch (e) {
-       print(e);
-     }
-   }
-   Future insertDatabase({required String title, required String date, required String time} ) async{
-     try {
-        database.transaction((txn) async {
-         int id1 = await txn.rawInsert(
-             'INSERT INTO tasks(title, date, time, status) VALUES("$title", "$date", "$time", "Incomplete")');
-         print('inserted: $id1');
-       });
-     }  catch (e) {
-       print(e);
-     }
-   }
-  void showDatabase() {}
-  void updateDatabase() {}
-  void deleteDatabase() {}
-
-
   Widget floutingButton() =>  FloatingActionButton(
     onPressed: () async{
       if(isBottomSheetShown) {
@@ -178,7 +142,13 @@ class _HomeLayoutState extends State<HomeLayout> {
                             isBottomSheetShown = false;
                           });
 
-                        }
+                        };
+                        TitleController.text = '';
+                        DateController.text = '';
+                        TimeController.text = '';
+                        setState(() {
+                          fabIcon = Icons.add;
+                        });
                       }),
                 ],
               ),
@@ -194,7 +164,6 @@ class _HomeLayoutState extends State<HomeLayout> {
 
     child: Icon(fabIcon),
   );
-
 
   Widget bottomNavbar() =>  SizedBox(
     height: 70,
@@ -214,6 +183,42 @@ class _HomeLayoutState extends State<HomeLayout> {
       ],
     ),
   );
+
+   void createDatabase() async{
+     try {
+       database = await openDatabase(
+        'todo.db',
+        version: 1,
+        onCreate: (database, version) async{
+          await database.execute(
+              'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)'
+          );
+          print('Database is Created!');
+        },
+        onOpen: (database) {
+          print('Database is Opened!');
+        },
+           );
+     }  catch (e) {
+       print(e);
+     }
+   }
+   Future insertDatabase({required String title, required String date, required String time} ) async{
+     try {
+        database.transaction((txn) async {
+         int id1 = await txn.rawInsert(
+             'INSERT INTO tasks(title, date, time, status) VALUES("$title", "$date", "$time", "Incomplete")');
+         print('inserted: $id1');
+       });
+     }  catch (e) {
+       print(e);
+     }
+   }
+  void showDatabase() {}
+  void updateDatabase() {}
+  void deleteDatabase() {}
+
+
 
 
 }
