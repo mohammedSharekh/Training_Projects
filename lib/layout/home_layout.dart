@@ -2,6 +2,7 @@ import 'package:bmi_calculater/modules/archiveTasks/archive_tasks.dart';
 import 'package:bmi_calculater/modules/doneTasks/done_tasks.dart';
 import 'package:bmi_calculater/modules/newTasks/new_tasks.dart';
 import 'package:bmi_calculater/shared/components/components.dart';
+import 'package:bmi_calculater/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -51,8 +52,8 @@ class _HomeLayoutState extends State<HomeLayout> {
           style: TextStyle(),),
         centerTitle: true,
       ),
-      backgroundColor: isBottomSheetShown ? Colors.grey: Colors.white,
-      body: screens[navIndex],
+      backgroundColor: isBottomSheetShown ? Colors.grey: Colors.purple[50],
+      body: tasks.length == 0 ? const Center(child: CircularProgressIndicator()) : screens[navIndex],
       floatingActionButton: floutingButton(),
       bottomNavigationBar: bottomNavbar(),
     );
@@ -138,10 +139,14 @@ class _HomeLayoutState extends State<HomeLayout> {
                             time: TimeController.text,
                           ).then((value)  {
                             Navigator.pop(context);
-                            setState(() {fabIcon = Icons.edit;});
-                            isBottomSheetShown = false;
+                            getDataFromDatabase(database).then((value) {
+                              setState(() {fabIcon = Icons.edit;});
+                              isBottomSheetShown = false;
+                              setState(() {
+                                tasks = value;
+                              });
+                            });
                           });
-
                         };
                         TitleController.text = '';
                         DateController.text = '';
@@ -198,7 +203,11 @@ class _HomeLayoutState extends State<HomeLayout> {
           print('Database is Created!');
         },
         onOpen: (database) {
-          print('Database is Opened!');
+          getDataFromDatabase(database).then((value) {
+            setState(() {
+              tasks = value;
+            });
+          });
         },
            );
      }  catch (e) {
@@ -216,7 +225,9 @@ class _HomeLayoutState extends State<HomeLayout> {
        print(e);
      }
    }
-  void showDatabase() {}
+   Future <List<Map>> getDataFromDatabase(database) async{
+     return await database.rawQuery('SELECT * FROM tasks');
+  }
   void updateDatabase() {}
   void deleteDatabase() {}
 

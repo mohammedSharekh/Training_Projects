@@ -1,12 +1,22 @@
+import 'package:bmi_calculater/shared/components/components.dart';
+import 'package:bmi_calculater/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class NewTasks extends StatelessWidget {
-  const NewTasks({Key? key}) : super(key: key);
+  NewTasks({Key? key}) : super(key: key);
 
+  // final List<Map> tasks = [];
+  // NewTasks({
+  //    this.tasks;
+  // });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('New Tasks'),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: ListView.separated(
+          itemBuilder: (context, index) => task(tasks[index]),
+          separatorBuilder: (context, index)=> SizedBox(),
+          itemCount: tasks.length),
     );
   }
 }
