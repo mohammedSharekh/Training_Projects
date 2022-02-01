@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onFieldSubmitted: (String value) {
                       print(value);
                     },
-                    sufixIcon: IconButton(onPressed: () {
+                    suffixIcon: IconButton(onPressed: () {
                       setState(() {
                         showPass = !showPass;
                       });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
 
 Widget defaultButton({
   double width = double.infinity,
@@ -36,9 +35,9 @@ Widget formField({
   required FormFieldValidator validate,
   required String label,
   required Icon prefixIcon,
-  IconButton? sufixIcon,
-  bool isPassword: false,
-  bool isClickable: true,
+  IconButton? suffixIcon,
+  bool isPassword = false,
+  bool isClickable = true,
 }) => TextFormField(
   validator: validate,
   controller: controller,
@@ -51,8 +50,8 @@ Widget formField({
   decoration: InputDecoration(
     labelText: label,
     prefixIcon: prefixIcon,
-    suffixIcon: sufixIcon,
-    border: OutlineInputBorder(),
+    suffixIcon: suffixIcon,
+    border: const OutlineInputBorder(),
   ),
 );
 
@@ -60,11 +59,13 @@ Widget formField({
 Widget task (Map model) => Padding(
 
   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+
   child: Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: Colors.white,
     ),
+
     child: Padding(
       padding: const EdgeInsets.all(18.0),
       child: Row(
@@ -73,23 +74,32 @@ Widget task (Map model) => Padding(
             radius: 35,
             child: Text("${model['time']}"),
           ),
-          SizedBox(width: 20,),
-
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(width: 20,),
+          Expanded(
+            child: Row(
             children: [
-              Text('${model['title']}', style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),),
-              const SizedBox(height: 10,),
-              Text('${model['date']}', style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${model['title']}', style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  const SizedBox(height: 10,),
+                  Text('${model['date']}', style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),),
+                  const SizedBox(height: 10,),
+                  Text('${model['status']}', style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.red ,
+                  ),),
+                ],
+              ),
             ],
-          ),
+          ),)
         ],
       ),
     ),

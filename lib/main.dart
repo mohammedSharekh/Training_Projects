@@ -5,10 +5,17 @@ import 'package:bmi_calculater/modules/counter/counter_screen.dart';
 import 'package:bmi_calculater/modules/home/home_screen.dart';
 import 'package:bmi_calculater/modules/login/login_screen.dart';
 import 'package:bmi_calculater/modules/messenger/messenger_screen.dart';
+import 'package:bmi_calculater/shared/bloc_observer.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  BlocOverrides.runZoned(() {
+    runApp(const MyApp());
+    },
+    blocObserver: MyBlocObserver(),
+  );
+
 }
 
 class MyApp extends StatelessWidget {

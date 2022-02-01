@@ -6,7 +6,6 @@ import 'package:bmi_calculater/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
-
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
 
@@ -21,14 +20,18 @@ class _HomeLayoutState extends State<HomeLayout> {
   bool isBottomSheetShown = false;
   IconData fabIcon = Icons.add;
   late Database database;
+
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   var _formKey = GlobalKey<FormState>();
+
    int navIndex = 0;
+
    List<Widget> screens = [
      NewTasks(),
      DoneTasks(),
      ArchivedTasks(),
    ];
+
    List<String> titles = [
      'New Tasks',
      'Done Tasks',
@@ -214,6 +217,7 @@ class _HomeLayoutState extends State<HomeLayout> {
        print(e);
      }
    }
+
    Future insertDatabase({required String title, required String date, required String time} ) async{
      try {
         database.transaction((txn) async {
@@ -225,9 +229,11 @@ class _HomeLayoutState extends State<HomeLayout> {
        print(e);
      }
    }
+
    Future <List<Map>> getDataFromDatabase(database) async{
      return await database.rawQuery('SELECT * FROM tasks');
   }
+
   void updateDatabase() {}
   void deleteDatabase() {}
 

@@ -13,7 +13,10 @@ class NewTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+
       child: ListView.separated(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           itemBuilder: (context, index) => task(tasks[index]),
           separatorBuilder: (context, index)=> SizedBox(),
           itemCount: tasks.length),
